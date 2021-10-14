@@ -16,12 +16,22 @@ class NewsController extends Controller
 
     public function show(int $id)
     {
-        $new = $this->getNews()[$id] ?? null;
-        if(!$new) {
+        $news = $this->getNews()[$id] ?? null;
+        if(!$news) {
             abort(404);
         }
         return view('news.show', [
-            'new' => $new
+            'news' => $news,
+            'id' => $id
         ]);
     }
+
+    public function category()
+    {
+        $category = $this->getCategoryNews();
+        return view('/news/categorynews', [
+            'category' => $this->getCategoryNews(),
+        ]);
+    }
+
 }

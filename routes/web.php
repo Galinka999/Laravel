@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,17 +18,24 @@ use App\Http\Controllers\NewsController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
-Route::get('/hello/{name}', function (string $name) {
-    return "<h2>Hello, {$name}</h2>";
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::resource('/news', AdminNewsController::class);
 });
 
-Route::get('/news', function () {
-    return "<h2>Новости</h2>";
-});
 
-Route::get('/news', [NewsController::class, 'index']);
-Route::get('/news/{id}', [NewsController::class, 'show'])
-        ->where('id', '\d+');
+Route::get('/news', [NewsController::class, 'index'])
+    ->name('news.index');
+
+Route::get('/news/double/{id}', [NewsController::class, 'show'])
+    ->where('id', '\d+')
+    ->name('news.show');
+
+Route::get('/auth', [AuthController::class, 'index'])
+    ->name('auth');
+
+Route::get('/news/category', [NewsController::class, 'category'])
+    ->name('category');
+

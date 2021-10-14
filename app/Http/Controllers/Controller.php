@@ -23,11 +23,20 @@ class Controller extends BaseController
         ]
     ];
 
+    protected array $categoryNews =
+        [
+            '0' => 'Политика',
+            '1' => 'Наука и техника',
+            '2' => 'Культура',
+            '3' => 'Медицина',
+            '4' => 'Прогноз погоды'
+        ];
+
     public function getNews(): array
     {
         $faker = Factory::create();
         $data = [];
-        for($i=1; $i<10;$i++) {
+        for($i=0; $i<10;$i++) {
             $data[] = [
                 'id' => $i,
                 'title' => $faker->jobTitle(),
@@ -37,6 +46,11 @@ class Controller extends BaseController
             ];
         }
         return $data;
+    }
+
+    public function getCategoryNews(): array
+    {
+        return $this->categoryNews;
     }
 
 }
