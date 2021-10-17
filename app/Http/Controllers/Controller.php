@@ -34,9 +34,10 @@ class Controller extends BaseController
 
     public function getNews(): array
     {
+//        return [];
         $faker = Factory::create();
         $data = [];
-        for($i=0; $i<10;$i++) {
+        for($i=0; $i<9;$i++) {
             $data[] = [
                 'id' => $i,
                 'title' => $faker->jobTitle(),
