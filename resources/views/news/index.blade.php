@@ -25,5 +25,22 @@
     @empty
         <h2>Записей нет</h2>
     @endforelse
+    <div class="table-responsive container"><br><br>
+        @include('inc.message')
+        <h3>Оставьте комментарий</h3>
+        <form method="post" action="{{ route('news.store', ['status' => 'new']) }}">
+            @csrf
+            <div class="form-group">
+                <label for="name">Введите имя</label>
+                <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}"/>
+            </div>
+            <div class="form-group">
+                <label for="comment">Комментарий</label>
+                <input type="text" class="form-control" name="comment" id="comment" value="{{ old('comment') }}"/>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-success">Отправить</button>
+        </form>
+    </div>
 @endsection
 

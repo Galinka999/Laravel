@@ -6,7 +6,7 @@
                 <h1 class="fw-light">Euronews</h1>
                 <p class="lead text-muted">Европейский ежедневный круглосуточный информационный телеканал, совмещающий видеохронику мировых событий и аудиокомментарий на тринадцати языках. Основан 1 января 1993 года. Кабельное, спутниковое и эфирное вещание Euronews в 2009 году охватывало более 294 миллионов домовладений в 150 странах мира.</p>
                 <p>
-                    <a href="{{ route('category') }}" class="btn btn-primary my-2">Категории новостей</a>
+                    <a href="{{ route('news.category') }}" class="btn btn-primary my-2">Категории новостей</a>
                     <a href="{{ route('admin.news.index') }}" class="btn btn-secondary my-2">Кабинет администратора</a>
                 </p>
             </div>
@@ -24,9 +24,9 @@
                     <p class="card-text">{!! $news['description'] !!}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                            <a href="{{ route('news.show', ['id' => intval($news['id'])]) }}">
+{{--                            <a href="{{ route('news.show', ['id' => intval($news['id'])]) }}">--}}
                                 <button type="button" class="btn btn-sm btn-outline-secondary">Смотреть подробнее</button>
-                            </a>
+{{--                            </a>--}}
                         </div>
                         <small class="text-muted">Автор: {{ $news['author'] }} <br>
                             {{ now()->format('d-m-Y H:1') }}</small>

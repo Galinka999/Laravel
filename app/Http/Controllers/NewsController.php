@@ -6,9 +6,13 @@ use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        //dd($this->getNews());
         return view('news.index', [
             'newsList' => $this->getNews()
         ]);
@@ -30,10 +34,22 @@ class NewsController extends Controller
     {
         $category = $this->getCategoryNews();
         $news = $this->getNews();
-        return view('news.categorynews', [
+        return view('news.category', [
             'category' => $category,
             'newsList' =>  $news
         ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $name = $request->input('name');
+        return $name;
     }
 
 }
