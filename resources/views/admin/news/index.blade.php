@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="table-responsive">
-        @include('inc.message', ['name' => 'Example'])
+        @include('inc.message')
         <table class="table table-striped table-sm">
             <thead>
             <tr>
@@ -28,9 +28,10 @@
                     <br>This is the last interation.
                 @endif
             <tr>
-                <td>{{ $news['id'] }}</td>
-                <td>{{ $news['title'] }}</td>
-                <td>{{ $news['author'] }}</td>
+                <td>{{ $news->id }}</td>
+                <td>{{ $news->title }}</td>
+                <td>{{ $news->author }}</td>
+{{--                <td>{{ $news->description }}</td>--}}
                 <td>{{ now()->format('d-m-Y H:1') }}</td>
                 <td>
                     <a href="">Изменить</a>&nbsp;|&nbsp; <a href="javasqript:;" style="color:red;">Удалить</a>

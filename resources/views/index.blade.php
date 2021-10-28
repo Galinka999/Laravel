@@ -15,20 +15,21 @@
 @endsection
 @section('content')
     @forelse($newsList as $news)
+{{--        @dd($news)--}}
         <div class="col">
             <div class="card shadow-sm">
                 <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
 
                 <div class="card-body">
-                    <p class="card-text"><strong>{{ $news['title'] }}</strong></p>
-                    <p class="card-text">{!! $news['description'] !!}</p>
+                    <p class="card-text"><strong>{{ $news->title }}</strong></p>
+                    <p class="card-text">{!! $news->description !!}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-{{--                            <a href="{{ route('news.show', ['id' => intval($news['id'])]) }}">--}}
+                            <a href="{{ route('news.show', ['id' => intval($news->id)]) }}">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">Смотреть подробнее</button>
-{{--                            </a>--}}
+                            </a>
                         </div>
-                        <small class="text-muted">Автор: {{ $news['author'] }} <br>
+                        <small class="text-muted">Автор: {{ $news->author }} <br>
                             {{ now()->format('d-m-Y H:1') }}</small>
                     </div>
                 </div>

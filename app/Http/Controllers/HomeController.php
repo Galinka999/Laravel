@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -13,8 +14,9 @@ class HomeController extends Controller
      */
     public function __invoke(Request $request)
     {
+        $news = new News();
         return view('index', [
-            'newsList' => $this->getNews()
+            'newsList' => $news->getNews()
         ]);
     }
 }

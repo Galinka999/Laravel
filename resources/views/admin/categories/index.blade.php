@@ -16,14 +16,24 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Заголовок</th>
-                <th scope="col">Автор</th>
-                <th scope="col">Дата добавления</th>
+                <th scope="col">Категория</th>
+                <th scope="col">Описание</th>
                 <th scope="col">Действия</th>
             </tr>
             </thead>
             <tbody>
-
+            @forelse($categories as $category)
+                <tr>
+                    <td>{{ $category->id }}</td>
+                    <td>{{ $category->title }}</td>
+                    <td>{{ $category->description }}</td>
+                    <td>
+                        <a href="">Изменить</a>&nbsp;|&nbsp; <a href="javasqript:;" style="color:red;">Удалить</a>
+                    </td>
+                </tr>
+            @empty
+                <td colspan="5">Записей нет</td>
+            @endforelse
             </tbody>
         </table>
     </div>
