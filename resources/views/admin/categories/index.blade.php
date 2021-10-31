@@ -17,7 +17,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Категория</th>
-                <th scope="col">Описание</th>
+                <th scope="col">Дата последнего обновления</th>
                 <th scope="col">Действия</th>
             </tr>
             </thead>
@@ -25,10 +25,16 @@
             @forelse($categories as $category)
                 <tr>
                     <td>{{ $category->id }}</td>
-                    <td>{{ $category->title }}</td>
-                    <td>{{ $category->description }}</td>
+{{--                    @dd($category->news()->get()->map(fn($item) => $item->title));--}}
+{{--                    @dd($category->news()->get()->first()));--}}
+                    <td>{{ $category->title }} ({{ $category->news->count() }})</td>
+                    <td>@if($category->updated_at)
+                            {{ $category->updated_at->format('d-m-Y H:i') }}
+                        @else -
+                        @endif
+                    </td>
                     <td>
-                        <a href="">Изменить</a>&nbsp;|&nbsp; <a href="javasqript:;" style="color:red;">Удалить</a>
+                        <a href="{{ route('admin.categories.edit', ['category' => $category]) }}">Изменить</a>&nbsp;|&nbsp; <a href="javasqript:;" style="color:red;">Удалить</a>
                     </td>
                 </tr>
             @empty
@@ -36,6 +42,9 @@
             @endforelse
             </tbody>
         </table>
+    </div>
+    <div>
+        {{ $categories->links() }}
     </div>
 @endsection
 

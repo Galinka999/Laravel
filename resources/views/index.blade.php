@@ -25,7 +25,7 @@
                     <p class="card-text">{!! $news->description !!}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                            <a href="{{ route('news.show', ['id' => intval($news->id)]) }}">
+                            <a href="{{ route('news.show', ['news' => intval($news->id)]) }}">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">Смотреть подробнее</button>
                             </a>
                         </div>
@@ -38,6 +38,9 @@
     @empty
         <h2>Записей нет</h2>
     @endforelse
+    <div>
+        {{ $newsList->links() }}
+    </div>
 @endsection
 
 

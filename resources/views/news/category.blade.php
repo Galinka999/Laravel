@@ -22,6 +22,9 @@
     @empty
         <td colspan="5">Записей нет</td>
     @endforelse
+    <div>
+        {{ $categories->links() }}
+    </div>
 @endsection
 
 

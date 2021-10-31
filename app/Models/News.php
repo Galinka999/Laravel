@@ -4,32 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class News extends Model
 {
     use HasFactory;
 
-    protected  $table = "news";
+    protected $table = "news";
 
-    public function getNews()
+    protected $fillable = [
+        'title', 'author', 'status', 'category_id', 'description'
+    ];
+
+    public function category(): BelongsTo
     {
-        /*dd(
-            \DB::table($this->table)
-                ->join('categories', 'news.category_id', '=', 'categories.id')
-                ->select("news.*", "categories.title as categoryTitle")
-                ->where('news.title', 'like', '%' . request()->get('s') . '%')
-                ->where('id', '>', 5)
-                ->orwhere('id', '<', 2)
-                ->get()
-        );*/
-        return \DB::table($this->table)
-            ->select(['id', 'title', 'author', 'description'])
-            ->get();
+        return $this->belongsTo('Category::class', 'category_id', 'id');
     }
-
-    public function getNewsById(int $id)
-    {
-        return \DB::table($this->table)->find($id);
-    }
-
 }

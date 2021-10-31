@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\IndexController as AdminController;
+use App\Http\Controllers\FeedbacksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +35,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 Route::get('/news', [NewsController::class, 'index'])
 -> name('news.index');
 
-Route::get('/news/double/{id}', [NewsController::class, 'show'])
-    ->where('id', '\d+')
+Route::get('/news/{news}', [NewsController::class, 'show'])
+    ->where('news', '\d+')
     ->name('news.show');
 
 Route::resource('/news/store', NewsController::class)
@@ -45,4 +47,13 @@ Route::get('/auth', [AuthController::class, 'index'])
 
 Route::get('/news/category', [NewsController::class, 'category'])
     ->name('news.category');
+
+Route::get('collection', function() {
+    $names = ['Ann', 'Kate', 'Ben', 'Lucy', 'Kim', 'Bob', 'Sara'];
+    $collection = collect($names);
+//    dd($collection->map(fn($item) => strtolower($item)));
+    dd($collection->count());
+});
+
+Route::resource('/feedbacks', FeedbacksController::class);
 

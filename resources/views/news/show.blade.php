@@ -6,6 +6,41 @@
     <p>Автор: {{ $news->author }}</p>
 <p>Описание: {{ $news->description }}</p>
 </div>
+<div class="table-responsive container"><br><br>
+    @include('inc.message')
+    <h3>Оставьте отзыв:</h3>
+    <form method="post" action="{{ route('feedbacks.store') }}">
+        @csrf
+        <div class="form-group hidden">
+            <input type="hidden" class="form-control" name="news_id" id="news_id" value="{{ $news->id }}"/>
+        </div>
+        <div class="form-group">
+            <label for="name">Ваше имя</label>
+            <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}"/>
+        </div>
+        <div class="form-group">
+            <label for="message">Сообщение</label>
+            <input type="text" class="form-control" name="message" id="message" value="{{ old('message') }}"/>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success">Отправить</button>
+    </form>
+    <br><br><br>
+    <div>
+        <h2>Отзывы:</h2>
+        @forelse($feedbacks as $feedback)
+                <h5>{{ $feedback->name }} </h5>
+                <p>{{ $feedback->message }}</p>
+            <button type="submit" class="btn btn-success">
+                <a href="{{ route('feedbacks.edit', ['feedback' => $feedback]) }}">Изменить</a>&nbsp;|&nbsp; <a href="javasqript:;" style="color:red;">Удалить</a>
+            </button>
+            <hr>
+        @empty
+            <h2>Записей нет</h2>
+        @endforelse
+    </div>
+</div>
+
 @endsection
 
 {{--@push('js')--}}

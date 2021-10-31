@@ -19,7 +19,9 @@ class NewsSeeder extends Seeder
     protected function getData(): array
     {
         $faker = Factory::create();
+
         $data = [];
+
         for($i=0; $i<10; $i++) {
             $data[] = [
                 'category_id' => 1,

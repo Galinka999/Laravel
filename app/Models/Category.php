@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
@@ -11,11 +12,14 @@ class Category extends Model
 
     protected $table = "categories";
 
-    public function getCategory()
+    protected $fillable = [
+        'title', 'description'
+    ];
+
+    public function  news(): HasMany
     {
-//        dd(\DB::table($this->table)->get());
-        return \DB::table($this->table)
-            ->select(['id', 'title', 'description'])
-            ->get();
+        return $this->hasMany(News::class, 'category_id', 'id');
     }
+
+
 }

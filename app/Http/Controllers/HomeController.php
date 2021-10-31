@@ -10,13 +10,12 @@ class HomeController extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function __invoke(News $news)
     {
-        $news = new News();
         return view('index', [
-            'newsList' => $news->getNews()
+            'newsList' => News::paginate(3)
         ]);
     }
 }

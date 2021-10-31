@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
-class CategorySeeder extends Seeder
+class FeedbackSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,19 +14,23 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('categories')->insert($this->getData());
+        \DB::table('feedbacks')->insert($this->getData());
     }
 
-    protected function getData(): array
+    public function getData(): array
     {
         $faker = Factory::create();
+
         $data = [];
-        for($i=0; $i<6; $i++) {
+
+        for($i=0; $i<11; $i++) {
             $data[] = [
-                'title' => $faker->sentence(mt_rand(3,10)),
-                'description' => $faker->text(mt_rand(10,20)),
+                'news_id' => 1,
+                'name' => $faker->firstName() . " " . $faker->lastName(),
+                'message' => $faker->text(mt_rand(10,300))
             ];
         }
         return $data;
+
     }
 }

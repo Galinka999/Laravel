@@ -24,17 +24,18 @@
             </thead>
             <tbody>
             @forelse($newsList as $news)
-                @if($loop->last)
-                    <br>This is the last interation.
-                @endif
             <tr>
                 <td>{{ $news->id }}</td>
                 <td>{{ $news->title }}</td>
                 <td>{{ $news->author }}</td>
 {{--                <td>{{ $news->description }}</td>--}}
-                <td>{{ now()->format('d-m-Y H:1') }}</td>
+                <td>@if($news->updated_at)
+                        {{ $news->updated_at->format('d-m-Y H:i') }}
+                    @else -
+                    @endif
+                </td>
                 <td>
-                    <a href="">Изменить</a>&nbsp;|&nbsp; <a href="javasqript:;" style="color:red;">Удалить</a>
+                    <a href="{{ route('admin.news.edit', ['news' => $news]) }}">Изменить</a>&nbsp;|&nbsp; <a href="javasqript:;" style="color:red;">Удалить</a>
                 </td>
             </tr>
             @empty
@@ -43,5 +44,8 @@
 
             </tbody>
         </table>
+    </div>
+    <div>
+        {{ $newsList->links() }}
     </div>
 @endsection
