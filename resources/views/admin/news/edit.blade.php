@@ -18,14 +18,17 @@
                         <option @if($category->id === $news->category_id) selected @endif value="{{ $category->id }}">{{ $category->title }}</option>
                     @endforeach
                 </select>
+                @error('category_id') <div style="color:red;">{{ $message }}</div>@enderror
             </div>
             <div class="form-group">
                 <label for="title">Наименование</label>
                 <input type="text" class="form-control" name="title" id="title" value="{{ $news->title }}"/>
+                @error('title') <div style="color:red;">{{ $message }}</div> @enderror
             </div>
             <div class="form-group">
                 <label for="author">Автор</label>
                 <input type="text" class="form-control" name="author" id="author" value="{{ $news->author }}"/>
+                @error('author') <div style="color:red;">{{ $message }}</div> @enderror
             </div>
             <div class="form-group">
                 <label for="status">Статус</label>

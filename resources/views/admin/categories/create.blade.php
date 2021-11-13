@@ -12,10 +12,12 @@
             <div class="form-group">
                 <label for="title">Наименование</label>
                 <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}"/>
+                @error('title') <div style="color:red;">{{ $message }}</div> @enderror
             </div>
             <div class="form-group">
                 <label for="description">Описание</label>
                 <textarea class="form-control" name="description" id="description">{!! old('description') !!}</textarea>
+                @error('description') <div style="color:red;">{{ $message }}</div>@enderror
             </div><br>
             <button type="submit" class="btn btn-success">Сохранить</button>
         </form>

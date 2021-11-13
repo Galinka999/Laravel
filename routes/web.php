@@ -4,11 +4,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\IndexController as AdminController;
-use App\Http\Controllers\FeedbacksController;
+use App\Http\Controllers\Feedback\FeedbacksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,5 +55,5 @@ Route::get('collection', function() {
     dd($collection->count());
 });
 
-Route::resource('/feedbacks', FeedbacksController::class);
+Route::resource('/feedback', FeedbacksController::class);
 

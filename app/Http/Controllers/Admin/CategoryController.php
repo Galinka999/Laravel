@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\EditCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -36,17 +38,14 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CreateCategoryRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
         //validation here
+        $category = Category::create($request->validated());
 
-        $category = Category::create(
-            $request->only(['title', 'description']
-            )
-        );
         if($category) {
             return redirect()
                 ->route('admin.categories.index')
@@ -83,18 +82,18 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Category $category
+     * @param EditCategoryRequest $request
+     * @param Category $category
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Category $category)
+    public function update(EditCategoryRequest $request, Category $category)
     {
         //validation here
 
-        $category->title = $request->input('title');
-        $category->description = $request->input('description');
+        $category = $category->fill($request->validated())->save();
+//        $category->description = $request->input('description');
 
-        if($category->save()) {
+        if($category) {
             return redirect()
                 ->route('admin.categories.index')
                 ->with('success', 'Категория успешно изменена');
@@ -109,10 +108,18 @@ class CategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Category  $category)
     {
-        //
+        try{
+            $category->delete();
+
+            return response()->json(['success' => true]);
+        } catch(\Exception $e) {
+            \Log::error($e->getMessage() . PHP_EOL, $e->getTrace());
+
+            return response()->json(['success' => false]);
+        }
     }
 }
