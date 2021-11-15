@@ -1,21 +1,29 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\News;
+
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * Create a new controller instance.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return void
      */
-    public function __invoke(News $news)
+    public function __construct()
     {
-        return view('index', [
-            'newsList' => News::paginate(3)
-        ]);
+        $this->middleware('auth');
     }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+        return view('home');
+    }
+
 }

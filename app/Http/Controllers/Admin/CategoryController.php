@@ -49,9 +49,9 @@ class CategoryController extends Controller
         if($category) {
             return redirect()
                 ->route('admin.categories.index')
-                ->with('success', 'Категория успешно добавлена');
+                ->with('success', __('messages.admin.categories.store.success'));
         }
-        return back()->with('error', 'Категория не добавлена');
+        return back()->with('error', __('messages.admin.categories.store.fail'));
     }
 
     /**
@@ -96,12 +96,12 @@ class CategoryController extends Controller
         if($category) {
             return redirect()
                 ->route('admin.categories.index')
-                ->with('success', 'Категория успешно изменена');
+                ->with('success', __('messages.admin.categories.update.success'));
         }
         /*$category = $category->fill(
             $request->only(['title', 'description'])
         )->save();*/
-        return back()->with('error', 'Категория не изменена');
+        return back()->with('error', __('messages.admin.categories.update.fail'));
     }
 
     /**
