@@ -6,6 +6,10 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Авторизация') }}</div>
+                <br>
+                <a href="{{ route('vk.link') }}">Войти через VK</a>
+                <br>
+                <a href="{{ route('github.link') }}">Войти через GitHub</a>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">

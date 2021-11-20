@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\EditCategoryRequest;
 use App\Http\Requests\EditUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserConrtoller extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -73,7 +72,7 @@ class UserConrtoller extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * * @param EditUserRequestRequest $request
+     * * @param EditUserRequest $request
      * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */

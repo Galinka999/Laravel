@@ -4,11 +4,13 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\SocialController;
+use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
-use App\Http\Controllers\Admin\UserConrtoller as AdminUserController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\IndexController as AdminController;
 use App\Http\Controllers\Feedback\FeedbacksController;
 
@@ -33,10 +35,12 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
         Route::get('/', AdminController::class)
             ->name('index');
+        Route::get('/parser', ParserController::class)
+        ->name('parser');
         Route::resource('/categories', AdminCategoryController::class);
         Route::resource('/news', AdminNewsController::class);
         Route::resource('/users', AdminUserController::class);
-});
+    });
 });
 
 Route::get('/news', [NewsController::class, 'index'])
@@ -49,8 +53,6 @@ Route::get('/news/{news}', [NewsController::class, 'show'])
 Route::resource('/news/store', NewsController::class)
     ->name('store', 'news.store');
 
-//Route::get('/auth', [AuthController::class, 'index'])
-//    ->name('auth');
 
 Route::get('/news/category', [NewsController::class, 'category'])
     ->name('news.category');
@@ -76,3 +78,14 @@ Route::get('session', function (){
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/vk/link', [SocialController::class, 'link'])
+        ->name('vk.link');
+    Route::get('/vk/callback', [SocialController::class, 'callback'])
+        ->name('vk.callback');
+    Route::get('/github/link', [SocialController::class, 'linkGithub'])
+        ->name('github.link');
+    Route::get('/github/callback', [SocialController::class, 'callbackGitHub'])
+        ->name('github.callback');
+});
