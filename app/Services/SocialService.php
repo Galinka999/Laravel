@@ -3,9 +3,11 @@
 namespace App\Services;
 
 use App\Contracts\Social;
+use App\Mail\CreatedPassword;
 use App\Models\User as Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Contracts\User;
 
 class SocialService implements Social
@@ -21,15 +23,23 @@ class SocialService implements Social
                 return route('account');
             }
         } else {
-            $user = Model::create([
+            $new_user = Model::create([
                 'email' => $user->getEmail(),
                 'name' => $user->getName(),
                 'password' => Hash::make($user->getName())
             ]);
 
-            //todo отправить на почту пользователю пароль
+            Mail::to($new_user->email)->send(new CreatedPassword($new_user));
 
-            return route('account');
+            $auth = Model::where('email', $user->getEmail())->first();
+            if($auth) {
+                $auth->name = $user->getName();
+                $auth->avatar = $user->getAvatar();
+                if($auth->save()) {
+                    Auth::loginUsingId($auth->id);
+                    return route('account');
+                }
+            }
         }
 
         throw new \Exception("User not found");
