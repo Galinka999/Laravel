@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Contracts\Parser;
+use App\Models\Category;
+use App\Models\News;
+use Illuminate\Support\Facades\DB;
 use Orchestra\Parser\XML\Facade as XmlParser;
 
 class ParserService implements Parser
@@ -20,26 +23,48 @@ class ParserService implements Parser
         return $this->url;
     }
 
-    public function start(): array
+    public function start($link)
     {
-        $xml = XmlParser::load($this->getUrl());
+        $xml = XmlParser::load($link);
 
-        return $xml->parse([
+        $data = $xml->parse([
             'title' => [
                 'uses' => 'channel.title'
-            ],
-            'link' => [
-                'uses' => 'channel.link'
             ],
             'description' => [
                 'uses' => 'channel.description'
             ],
-            'image' => [
-                'uses' => 'channel.image.url'
-            ],
             'news' => [
-                'uses' => 'channel.item[title,link,guid,description,pubDate]'
+                'uses' => 'channel.item[title,description,pubDate]'
             ]
         ]);
+
+        $e = explode("/", $link);
+        $fileName = end($e);
+        $name_pars = pathinfo($fileName, PATHINFO_FILENAME );
+//        \Storage::append( 'news/' . $fileName, json_encode($data));
+        $category = Category::where('name_pars', $name_pars)->first();
+        $title = explode(": ", $data['title']);
+        $titleName = end($title);
+        if(!$category) {
+            $category = Category::create([
+                'title' => $titleName,
+                'description' => $data['description'],
+                'name_pars' => $name_pars
+            ]);
+        }
+
+        foreach ($data['news'] as $news) {
+            $news_db = News::where('title', $news['title'])->first();
+            if(!$news_db) {
+                $news = News::create([
+                    'category_id' => $category->id,
+                    'title' => $news['title'],
+                    'author' => $title[0],
+                    'description' => $news['description'],
+                    'created_at' => $news['pubDate']
+                ]);
+            }
+        }
     }
 }

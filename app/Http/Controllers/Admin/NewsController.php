@@ -7,6 +7,7 @@ use App\Http\Requests\CreateNewsRequest;
 use App\Http\Requests\EditNewsRequest;
 use App\Models\Category;
 use App\Models\News;
+use App\Services\ImageService;
 
 class NewsController extends Controller
 {
@@ -17,8 +18,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::paginate(5);
-
+        $news = News::paginate(15);
         return view('admin.news.index', [
             'newsList' => $news
         ]);
@@ -45,9 +45,7 @@ class NewsController extends Controller
      */
     public function store(CreateNewsRequest $request)
     {
-
         $news = News::create($request->validated());
-
         if($news) {
             return redirect()
                 ->route('admin.news.index')
@@ -91,7 +89,12 @@ class NewsController extends Controller
      */
     public function update(EditNewsRequest $request, News $news)
     {
-        $news = $news->fill($request->validated())->save();
+        $validated = $request->validated();
+        if(isset($validated['image']) && !is_null($validated['image'])) {
+            $service = app(ImageService::class);
+            $validated['image'] = $service->imageUpload($validated['image']);
+        }
+        $news = $news->fill($validated)->save();
 
         if($news) {
             return redirect()

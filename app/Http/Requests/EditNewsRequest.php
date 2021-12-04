@@ -26,6 +26,7 @@ class EditNewsRequest extends FormRequest
         return [
             'category_id' => ['required', 'integer'],
             'title' => ['required', 'string', 'min:3', 'max:100'],
+            'image' => ['nullable', 'mimes:jpg,png,jpeg'],
             'author' => ['required', 'string', 'min:2', 'max:100'],
             'status' => ['required', 'string'],
             'description' => ['sometimes']

@@ -1,10 +1,12 @@
 @extends('layouts.main')
-@section('title') Новость с #ID {{ $news->id }} - @parent @stop
+@section('title') Новость {{ $news->id }} - @parent @stop
 @section('content')
 </div>
-    <h1>Новость с #ID {{ $news->id }}</h1>
-    <p>Автор: {{ $news->author }}</p>
-<p>Описание: {{ $news->description }}</p>
+    <br><br>
+    <h1>{{ $news->title }}</h1><br><br>
+    <h4>Источник: {{ $news->author }}</h4>
+    <p>Дата публикации: {{ $news->created_at->format('d-m-Y H:i') }}</p><br><br>
+    <h5>{{ $news->description }}</h5><br><br>
 </div>
 <div class="table-responsive container"><br><br>
 {{--    @include('inc.message')--}}
@@ -16,7 +18,8 @@
         </div>
         <div class="form-group">
             <label for="name">Ваше имя</label>
-            <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}"/>
+
+            <input type="text" class="form-control" name="name" id="name" value="@if(Auth::user()) {{ \Auth::user()->name }} @else {{ old('name') }} @endif"/>
             @error('name') <div style="color:red;">{{ $message }}</div> @enderror
         </div>
         <div class="form-group">

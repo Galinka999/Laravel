@@ -4,14 +4,12 @@
             <div class="row">
                 <div class="col-sm-8 col-md-7 py-4">
                     <h4 class="text-white">О нас</h4>
-                    <p class="text-muted">Европейский ежедневный круглосуточный информационный телеканал, совмещающий видеохронику мировых событий и аудиокомментарий на тринадцати языках.</p>
+                    <p class="text-muted">Ежедневный круглосуточный информационный сайт, Все самые свежие новости с Яндекс.Новости и не только.</p>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
                     <h4 class="text-white">Контакты</h4>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Twitter</a></li>
-                        <li><a href="#" class="text-white">Facebook</a></li>
-                        <li><a href="#" class="text-white">Email</a></li>
+                        <li><a href="https://vk.com/id7837460" class="text-white">Vkontakte</a></li>
                     </ul>
                 </div>
             </div>

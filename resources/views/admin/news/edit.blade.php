@@ -7,7 +7,7 @@
     </div>
     <div class="table-responsive">
         @include('inc.message')
-        <form method="post" action="{{ route('admin.news.update', ['news' => $news])}}">
+        <form method="post" action="{{ route('admin.news.update', ['news' => $news])}}" enctype="multipart/form-data">
             @csrf
             @method('put')
             <div class="form-group">
@@ -41,9 +41,32 @@
             <div class="form-group">
                 <label for="description">Описание</label>
                 <textarea class="form-control" name="description" id="description">{!! $news->description !!}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="image">Изображение</label>
+                @if($news->image)
+                    <img src="{{ Storage::disk('news')->url($news->image) }}" style="width: 200px;" />
+                @endif
+                <input type="file" class="form-control" name="image" id="image"/>
             </div><br>
             <button type="submit" class="btn btn-success">Сохранить</button>
         </form>
     </div>
 @endsection
+
+@push('js')
+    <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#description', {
+                filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+                filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+                filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+                filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+            } ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+@endpush
 

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\EditCategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -17,9 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-//        $categories = Category::whereIn('id', ['1', '5', '7'])->get();
-//        dd($categories);
-        $categories = Category::with('news')->paginate(5);
+        $categories = Category::with('news')->paginate(10);
         return view('admin.categories.index', [
             'categories' => $categories
         ]);
@@ -43,7 +40,6 @@ class CategoryController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
-        //validation here
         $category = Category::create($request->validated());
 
         if($category) {
@@ -88,19 +84,12 @@ class CategoryController extends Controller
      */
     public function update(EditCategoryRequest $request, Category $category)
     {
-        //validation here
-
         $category = $category->fill($request->validated())->save();
-//        $category->description = $request->input('description');
-
         if($category) {
             return redirect()
                 ->route('admin.categories.index')
                 ->with('success', __('messages.admin.categories.update.success'));
         }
-        /*$category = $category->fill(
-            $request->only(['title', 'description'])
-        )->save();*/
         return back()->with('error', __('messages.admin.categories.update.fail'));
     }
 

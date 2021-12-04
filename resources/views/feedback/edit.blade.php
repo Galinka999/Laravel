@@ -2,9 +2,11 @@
 @section('title') Новость с #ID {{ $news->id }} - @parent @stop
 @section('content')
 </div>
-<h1>Новость с ID # {{ $news->id }}</h1>
-<p>Автор: {{ $news->author }}</p>
-<p>Описание: {{ $news->description }}</p>
+    <br><br>
+    <h1>{{ $news->title }}</h1><br><br>
+    <h4>Источник: {{ $news->author }}</h4>
+    <p>Дата публикации: {{ $news->created_at->format('d-m-Y H:i') }}</p><br><br>
+    <h5>{{ $news->description }}</h5><br><br>
 </div>
 <div class="table-responsive container"><br><br>
     @include('inc.message')

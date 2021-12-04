@@ -19,6 +19,11 @@
                 <label for="description">Описание</label>
                 <textarea class="form-control" name="description" id="description">{!! $category->description !!}</textarea>
                 @error('description') <div style="color:red;">{{ $message }}</div>@enderror
+            </div>
+            <div class="form-group">
+                <label for="name_pars">Наименование категории при парсинге</label>
+                <input type="text" class="form-control" name="name_pars" id="name_pars" value="{{ $category->name_pars }}"/>
+                @error('name_pars') <div style="color:red;">{{ $message }}</div>@enderror
             </div><br>
             <button type="submit" class="btn btn-success">Сохранить</button>
         </form>

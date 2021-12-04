@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Feedback;
 use App\Models\News;
-use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
@@ -16,19 +15,15 @@ class NewsController extends Controller
      */
     public function index()
     {
-//        $news = new News();
-//        dd($news->getNews());
         return view('news.index', [
-            'newsList' => News::paginate(6)
+            'newsList' => News::paginate(9)
         ]);
     }
 
     public function show(News $news)
     {
         $news_id = $news->id;
-//        dd($news_id);
         $feedbacks = Feedback::where('news_id', '=', $news_id)->get();
-//                dd($feedbacks);
         return view('news.show', [
             'news' => $news,
             'feedbacks' => $feedbacks
@@ -38,24 +33,17 @@ class NewsController extends Controller
     public function category()
     {
         $categories = Category::paginate(6);
-//        $category = $this->getCategoryNews();
-//        $news = (new News())->getNews();
         return view('news.category', [
             'categories' => $categories,
-//            'newsList' =>  $news
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function categoryShow(Category $category)
     {
-        $name = $request->input('name');
-        return $name;
+        $newsList = News::where('category_id', $category->id)->paginate(9);
+        return view('news.index', [
+            'newsList' => $newsList,
+        ]);
     }
 
 }

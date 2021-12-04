@@ -50,9 +50,8 @@ Route::get('/news/{news}', [NewsController::class, 'show'])
     ->where('news', '\d+')
     ->name('news.show');
 
-Route::resource('/news/store', NewsController::class)
-    ->name('store', 'news.store');
-
+Route::get('/news/category/{category}', [NewsController::class, 'categoryShow'])
+    ->name('news.category.show');
 
 Route::get('/news/category', [NewsController::class, 'category'])
     ->name('news.category');
@@ -89,3 +88,4 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('/github/callback', [SocialController::class, 'callbackGitHub'])
         ->name('github.callback');
 });
+

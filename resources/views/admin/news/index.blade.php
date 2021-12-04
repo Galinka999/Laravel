@@ -8,6 +8,9 @@
             <div class="btn-group me-2">
                 <a href="{{ route('admin.news.create') }}" class="btn btn-sm btn-outline-secondary">Добавить</a>
             </div>
+            <div class="btn-group me-2">
+                <a href="{{ route('admin.parser') }}" class="btn btn-sm btn-outline-secondary">Парсить</a>
+            </div>
         </div>
     </div>
     <div class="table-responsive">

@@ -34,10 +34,10 @@
             <div class="container">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                     @yield('content')
-                </div>
+                </div><br><br>
+                @yield('links')
             </div>
         </div>
-
     </main>
 
     <x-footer></x-footer>
