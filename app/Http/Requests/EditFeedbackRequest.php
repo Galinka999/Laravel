@@ -26,7 +26,8 @@ class EditFeedbackRequest extends FormRequest
         return [
             'news_id' => ['required', 'integer'],
             'name' => ['required', 'string', 'min:3', 'max:30'],
-            'message' => ['required', 'string', 'min:2', 'max:300']
+            'message' => ['required', 'string', 'min:2', 'max:300'],
+            'user_id' => ['integer']
         ];
     }
 

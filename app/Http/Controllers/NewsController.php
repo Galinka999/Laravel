@@ -23,7 +23,7 @@ class NewsController extends Controller
     public function show(News $news)
     {
         $news_id = $news->id;
-        $feedbacks = Feedback::where('news_id', '=', $news_id)->get();
+        $feedbacks = Feedback::where('news_id', '=', $news_id)->orderBy('id', 'desc')->get();
         return view('news.show', [
             'news' => $news,
             'feedbacks' => $feedbacks

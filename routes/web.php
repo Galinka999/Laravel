@@ -32,6 +32,7 @@ Route::get('/', function (){
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/account', AccountController::class)->name('account');
+    Route::resource('/feedbacks', FeedbacksController::class);
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
         Route::get('/', AdminController::class)
             ->name('index');
@@ -55,8 +56,6 @@ Route::get('/news/category/{category}', [NewsController::class, 'categoryShow'])
 
 Route::get('/news/category', [NewsController::class, 'category'])
     ->name('news.category');
-
-Route::resource('/feedback', FeedbacksController::class);
 
 Route::get('collection', function() {
     $names = ['Ann', 'Kate', 'Ben', 'Lucy', 'Kim', 'Bob', 'Sara'];

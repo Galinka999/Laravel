@@ -24,9 +24,13 @@
     @empty
         <h2>Записей нет</h2>
     @endforelse
-
 @endsection
+
 @section('links')
+    <br><br>
+    <a href="{{ route('news.category') }}">
+        <button type="submit" class="btn btn-success">Вернуться к списку категорий</button>
+    </a><br><br><br>
     <div>
         {{ $newsList->links() }}
     </div>

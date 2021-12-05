@@ -12,6 +12,6 @@ class Feedback extends Model
     protected $table = "feedbacks";
 
     protected $fillable = [
-        'news_id', 'name', 'message'
+        'news_id', 'name', 'message', 'user_id'
     ];
 }

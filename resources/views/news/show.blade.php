@@ -6,19 +6,22 @@
     <h1>{{ $news->title }}</h1><br><br>
     <h4>Источник: {{ $news->author }}</h4>
     <p>Дата публикации: {{ $news->created_at->format('d-m-Y H:i') }}</p><br><br>
-    <h5>{{ $news->description }}</h5><br><br>
+    <h5>{!! $news->description !!}</h5><br><br>
 </div>
-<div class="table-responsive container"><br><br>
+<div class="table-responsive container">
+    <a href="{{ route('news.index') }}">
+        <button type="submit" class="btn btn-success">Вернуться к списку новостей</button>
+    </a><br><br><br><br><br>
 {{--    @include('inc.message')--}}
+    @if(Auth::user())
     <h3>Оставьте отзыв:</h3>
-    <form method="post" action="{{ route('feedback.store') }}">
+    <form method="post" action="{{ route('feedbacks.store', ['user_id' => Auth::user()->id]) }}">
         @csrf
         <div class="form-group hidden">
             <input type="hidden" class="form-control" name="news_id" id="news_id" value="{{ $news->id }}"/>
         </div>
         <div class="form-group">
             <label for="name">Ваше имя</label>
-
             <input type="text" class="form-control" name="name" id="name" value="@if(Auth::user()) {{ \Auth::user()->name }} @else {{ old('name') }} @endif"/>
             @error('name') <div style="color:red;">{{ $message }}</div> @enderror
         </div>
@@ -30,16 +33,23 @@
         <br>
         <button type="submit" class="btn btn-success">Отправить</button>
     </form>
+    @else
+        <h3>Чтобы оставить комментарий
+            <a href="{{ route('login') }}">войдите в кабинет.</a>
+        </h3>
+    @endif
     <br><br><br>
     <div>
         <h2>Отзывы:</h2>
         @forelse($feedbacks as $feedback)
                 <h5>{{ $feedback->name }} </h5>
                 <p>{{ $feedback->message }}</p>
+                @if(Auth::user() && $feedback->user_id === \Auth::user()->id)
             <button type="submit" class="btn btn-success">
-                <a href="{{ route('feedback.edit', ['feedback' => $feedback]) }}">Изменить</a>&nbsp;|&nbsp;
+                <a href="{{ route('feedbacks.edit', ['feedback' => $feedback]) }}">Изменить</a>&nbsp;|&nbsp;
                 <a href="javasqript:;" class="delete" rel="{{ $feedback->id }}" style="color:red;">Удалить</a>
             </button>
+            @endif
             <hr>
         @empty
             <h2>Записей нет</h2>
@@ -61,7 +71,7 @@
             links.forEach(function (index) {
                 index.addEventListener("click", function () {
                     if(confirm("Вы подтверждаете удаление ?")) {
-                        fetchData("{{ url('/feedback') }}/" + this.getAttribute('rel'), {
+                        fetchData("{{ url('/feedbacks') }}/" + this.getAttribute('rel'), {
                             method: "DELETE",
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8',

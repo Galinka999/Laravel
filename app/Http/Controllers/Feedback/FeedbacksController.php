@@ -14,11 +14,11 @@ class FeedbacksController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function index()
     {
-
+        return view('index');
     }
 
     /**
@@ -42,12 +42,9 @@ class FeedbacksController extends Controller
 
         $feedback = Feedback::create($request->validated());
 
-        $news_id = $request->only('news_id');
-        $news_id = intval($news_id['news_id']);
-
         if($feedback) {
             return redirect()
-                ->route('news.show', ['news' => $news_id])
+                ->route('news.show', ['news' => $feedback->news_id])
                 ->with('success', 'Отзыв успешно сохранен');
         }
         return redirect()->back()->with('error', 'Отзыв не добавлен');
@@ -72,10 +69,8 @@ class FeedbacksController extends Controller
      */
     public function edit(Feedback $feedback)
     {
-//        dd($feedback->name);
         $news = News::where('id', $feedback->news_id)->get();
-        $feedbacks = Feedback::where('news_id', $news[0]['id'])->get();
-//        dd($news[0]['id']);
+        $feedbacks = Feedback::where('news_id', $news[0]['id'])->orderBy('id', 'desc')->get();
         return view('feedback.edit', [
             'news' => $news[0],
             'feedbacks' => $feedbacks,
