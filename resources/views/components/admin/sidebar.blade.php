@@ -25,6 +25,12 @@
                     Пользователи
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link @if(request()->routeIs('admin.resourсes.*')) active @endif" href="{{ route('admin.resources.index') }}">
+                    <span data-feather="shopping-cart"></span>
+                    Ресурсы
+                </a>
+            </li>
         </ul>
     </div>
 </nav>

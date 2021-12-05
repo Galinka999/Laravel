@@ -16,7 +16,7 @@ class NewsController extends Controller
     public function index()
     {
         return view('news.index', [
-            'newsList' => News::paginate(9)
+            'newsList' => News::orderBy('id', 'desc')->paginate(9)
         ]);
     }
 
@@ -40,7 +40,7 @@ class NewsController extends Controller
 
     public function categoryShow(Category $category)
     {
-        $newsList = News::where('category_id', $category->id)->paginate(9);
+        $newsList = News::where('category_id', $category->id)->orderBy('id', 'desc')->paginate(9);
         return view('news.index', [
             'newsList' => $newsList,
         ]);

@@ -11,6 +11,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\ResourceController as AdminResourceController;
 use App\Http\Controllers\Admin\IndexController as AdminController;
 use App\Http\Controllers\Feedback\FeedbacksController;
 
@@ -41,6 +42,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::resource('/categories', AdminCategoryController::class);
         Route::resource('/news', AdminNewsController::class);
         Route::resource('/users', AdminUserController::class);
+        Route::resource('/resources', AdminResourceController::class);
     });
 });
 

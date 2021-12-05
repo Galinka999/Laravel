@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Contracts\Parser;
 use App\Jobs\NewsJob;
-use Illuminate\Http\Request;
+use App\Models\Resource;
 use App\Http\Controllers\Controller;
 use App\Services\ParserService;
 
@@ -13,32 +13,16 @@ class ParserController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param ParserService $parserService
+     * @param Resource $resource
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function __invoke(ParserService $parserService)
+    public function __invoke(ParserService $parserService, Resource $resource)
     {
-        $links = [
-            'https://news.yandex.ru/auto.rss',
-            'https://news.yandex.ru/army.rss',
-            'https://news.yandex.ru/gadgets.rss',
-            'https://news.yandex.ru/index.rss',
-            'https://news.yandex.ru/martial_arts.rss',
-            'https://news.yandex.ru/communal.rss',
-            'https://news.yandex.ru/health.rss',
-            'https://news.yandex.ru/games.rss',
-            'https://news.yandex.ru/movies.rss',
-            'https://news.yandex.ru/cosmos.rss',
-            'https://news.yandex.ru/music.rss',
-        ];
-
-        foreach ($links as $link) {
-            dispatch(new NewsJob($link));
-//            $parserService->start($link);
+        $resources = Resource::where('status', '=', 'ACTIV')->get();
+        foreach ($resources as $resource) {
+            dispatch(new NewsJob($resource->link));
         }
-
         return redirect()->route('admin.news.index');
-//        echo "Спасибо, парсинг";
-
     }
 }
