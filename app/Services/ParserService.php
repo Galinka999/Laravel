@@ -5,8 +5,7 @@ namespace App\Services;
 use App\Contracts\Parser;
 use App\Models\Category;
 use App\Models\News;
-use Illuminate\Support\Facades\DB;
-use Orchestra\Parser\XML\Facade as XmlParser;
+use Orchestra\Parser\Xml\Facade as XmlParser;
 
 class ParserService implements Parser
 {
