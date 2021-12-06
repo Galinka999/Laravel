@@ -14,6 +14,6 @@ class ImageService implements Image
         $fileExtension = $file->getClientOriginalExtension();
         $fileName = uniqid('n_') . "." . $fileExtension;
 //        $file->storePubliclyAs(Auth::id(), $fileName, 'news');
-        dd($file->storeAs(Auth::id(), $fileName, 'news'));
+        return $file->storeAs(Auth::id(), $fileName, 'news');
     }
 }
